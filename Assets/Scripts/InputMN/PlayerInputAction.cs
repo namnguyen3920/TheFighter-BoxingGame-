@@ -28,27 +28,18 @@ public partial class @PlayerInputAction: IInputActionCollection2, IDisposable
             ""id"": ""17a6e189-ade8-4a3a-9d5d-94745c587204"",
             ""actions"": [
                 {
-                    ""name"": ""PunchLeft"",
-                    ""type"": ""Button"",
-                    ""id"": ""d90867c8-4f53-430b-954a-3c35364d6803"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
-                    ""name"": ""PunchRight"",
-                    ""type"": ""Button"",
-                    ""id"": ""265b55ba-8e04-491d-a743-34fe9b22348a"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
-                    ""name"": ""PunchStraight"",
+                    ""name"": ""Attack"",
                     ""type"": ""Button"",
                     ""id"": ""af0e743e-eaf3-4083-8617-88470cc907ea"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Block"",
+                    ""type"": ""Button"",
+                    ""id"": ""fdc38e89-9002-4c59-ad16-11a048237a27"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
@@ -58,34 +49,23 @@ public partial class @PlayerInputAction: IInputActionCollection2, IDisposable
             ""bindings"": [
                 {
                     ""name"": """",
-                    ""id"": ""b7bef75f-36e0-4539-991b-4731d5ce6277"",
+                    ""id"": ""d09bc948-1015-46f2-9c58-4624f3cd87b7"",
                     ""path"": ""<Keyboard>/q"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""PunchLeft"",
+                    ""action"": ""Attack"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
                 {
                     ""name"": """",
-                    ""id"": ""8dbc9b98-1c0b-4ca3-9c86-4aa34fc2a5cf"",
+                    ""id"": ""cf76e6d2-5a8b-4c28-8852-e34e8c8d0b8b"",
                     ""path"": ""<Keyboard>/e"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""PunchRight"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""d09bc948-1015-46f2-9c58-4624f3cd87b7"",
-                    ""path"": ""<Keyboard>/w"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""PunchStraight"",
+                    ""action"": ""Block"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -96,9 +76,8 @@ public partial class @PlayerInputAction: IInputActionCollection2, IDisposable
 }");
         // PlayerInput
         m_PlayerInput = asset.FindActionMap("PlayerInput", throwIfNotFound: true);
-        m_PlayerInput_PunchLeft = m_PlayerInput.FindAction("PunchLeft", throwIfNotFound: true);
-        m_PlayerInput_PunchRight = m_PlayerInput.FindAction("PunchRight", throwIfNotFound: true);
-        m_PlayerInput_PunchStraight = m_PlayerInput.FindAction("PunchStraight", throwIfNotFound: true);
+        m_PlayerInput_Attack = m_PlayerInput.FindAction("Attack", throwIfNotFound: true);
+        m_PlayerInput_Block = m_PlayerInput.FindAction("Block", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -160,16 +139,14 @@ public partial class @PlayerInputAction: IInputActionCollection2, IDisposable
     // PlayerInput
     private readonly InputActionMap m_PlayerInput;
     private List<IPlayerInputActions> m_PlayerInputActionsCallbackInterfaces = new List<IPlayerInputActions>();
-    private readonly InputAction m_PlayerInput_PunchLeft;
-    private readonly InputAction m_PlayerInput_PunchRight;
-    private readonly InputAction m_PlayerInput_PunchStraight;
+    private readonly InputAction m_PlayerInput_Attack;
+    private readonly InputAction m_PlayerInput_Block;
     public struct PlayerInputActions
     {
         private @PlayerInputAction m_Wrapper;
         public PlayerInputActions(@PlayerInputAction wrapper) { m_Wrapper = wrapper; }
-        public InputAction @PunchLeft => m_Wrapper.m_PlayerInput_PunchLeft;
-        public InputAction @PunchRight => m_Wrapper.m_PlayerInput_PunchRight;
-        public InputAction @PunchStraight => m_Wrapper.m_PlayerInput_PunchStraight;
+        public InputAction @Attack => m_Wrapper.m_PlayerInput_Attack;
+        public InputAction @Block => m_Wrapper.m_PlayerInput_Block;
         public InputActionMap Get() { return m_Wrapper.m_PlayerInput; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -179,28 +156,22 @@ public partial class @PlayerInputAction: IInputActionCollection2, IDisposable
         {
             if (instance == null || m_Wrapper.m_PlayerInputActionsCallbackInterfaces.Contains(instance)) return;
             m_Wrapper.m_PlayerInputActionsCallbackInterfaces.Add(instance);
-            @PunchLeft.started += instance.OnPunchLeft;
-            @PunchLeft.performed += instance.OnPunchLeft;
-            @PunchLeft.canceled += instance.OnPunchLeft;
-            @PunchRight.started += instance.OnPunchRight;
-            @PunchRight.performed += instance.OnPunchRight;
-            @PunchRight.canceled += instance.OnPunchRight;
-            @PunchStraight.started += instance.OnPunchStraight;
-            @PunchStraight.performed += instance.OnPunchStraight;
-            @PunchStraight.canceled += instance.OnPunchStraight;
+            @Attack.started += instance.OnAttack;
+            @Attack.performed += instance.OnAttack;
+            @Attack.canceled += instance.OnAttack;
+            @Block.started += instance.OnBlock;
+            @Block.performed += instance.OnBlock;
+            @Block.canceled += instance.OnBlock;
         }
 
         private void UnregisterCallbacks(IPlayerInputActions instance)
         {
-            @PunchLeft.started -= instance.OnPunchLeft;
-            @PunchLeft.performed -= instance.OnPunchLeft;
-            @PunchLeft.canceled -= instance.OnPunchLeft;
-            @PunchRight.started -= instance.OnPunchRight;
-            @PunchRight.performed -= instance.OnPunchRight;
-            @PunchRight.canceled -= instance.OnPunchRight;
-            @PunchStraight.started -= instance.OnPunchStraight;
-            @PunchStraight.performed -= instance.OnPunchStraight;
-            @PunchStraight.canceled -= instance.OnPunchStraight;
+            @Attack.started -= instance.OnAttack;
+            @Attack.performed -= instance.OnAttack;
+            @Attack.canceled -= instance.OnAttack;
+            @Block.started -= instance.OnBlock;
+            @Block.performed -= instance.OnBlock;
+            @Block.canceled -= instance.OnBlock;
         }
 
         public void RemoveCallbacks(IPlayerInputActions instance)
@@ -220,8 +191,7 @@ public partial class @PlayerInputAction: IInputActionCollection2, IDisposable
     public PlayerInputActions @PlayerInput => new PlayerInputActions(this);
     public interface IPlayerInputActions
     {
-        void OnPunchLeft(InputAction.CallbackContext context);
-        void OnPunchRight(InputAction.CallbackContext context);
-        void OnPunchStraight(InputAction.CallbackContext context);
+        void OnAttack(InputAction.CallbackContext context);
+        void OnBlock(InputAction.CallbackContext context);
     }
 }

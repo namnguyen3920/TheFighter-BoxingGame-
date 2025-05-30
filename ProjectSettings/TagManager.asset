@@ -3,7 +3,14 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - Enemy
+  - EnemySlider
+  - PlayerSlider
+  - EnemyAction
+  - PlayerAction
+  - EnemyHealth
+  - EnemyController
   layers:
   - Default
   - TransparentFX
@@ -11,10 +18,10 @@ TagManager:
   - 
   - Water
   - UI
-  - 
-  - 
-  - 
-  - 
+  - EnemyHitBox
+  - PlayerHitBox
+  - PlayerAttackHitBox
+  - EnemyAttackHitBox
   - 
   - 
   - 
