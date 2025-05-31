@@ -35,10 +35,7 @@ public class UIMN : Singleton_Mono_Method<UIMN>
 
     private void Awake()
     {
-        var findEnemy = GameObject.FindWithTag("EnemyHealth");;
         gameUI = GetComponentInChildren<RectTransform>();
-        if (findEnemy != null)
-            enemyHealth = findEnemy.GetComponent<HealthMN>();
     }
     private void Start()
     {
@@ -101,6 +98,22 @@ public class UIMN : Singleton_Mono_Method<UIMN>
     {
         turnTimer.text = Mathf.CeilToInt(timer).ToString();
     }
+    public void SetupEnemyHealth(HealthMN enemy)
+    {
+        if (enemyHealth != null)
+        {
+            enemyHealth.OnHealthUpdated -= OnEnemyHealthUpdated;
+        }
+
+        enemyHealth = enemy;
+
+        if (enemyHealth != null && enabled)
+        {
+            enemyHealth.OnHealthUpdated += OnEnemyHealthUpdated;
+            OnEnemyHealthUpdated(enemyHealth.CurrentHealth, enemyHealth.MaxHealth);
+        }
+
+    }
     public void ShowEndGameUI(EndGame result)
     {
         EndGamePanel.gameObject.SetActive(true);
@@ -122,7 +135,6 @@ public class UIMN : Singleton_Mono_Method<UIMN>
     private void OnEnable()
     {
         playerHealth.OnHealthUpdated += OnPlayerHealthUpdated;
-        enemyHealth.OnHealthUpdated += OnEnemyHealthUpdated;
     }
 
     private void OnDisable()

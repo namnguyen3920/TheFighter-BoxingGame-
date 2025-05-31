@@ -17,7 +17,12 @@ public class GameManager : Singleton_Mono_Method<GameManager>
 
     private void Start()
     {
-        enemy = GameObject.FindWithTag("Enemy").GetComponent<CharController>();
+        
+        
+    }
+    public void RegisterEnemy(CharController ec)
+    {
+        enemy = ec;
         UIMN.d_Instance.ShowEnemyStats(enemy);
         OnTurnEnd += ResetTurn;
         StartCoroutine(TurnLoop());

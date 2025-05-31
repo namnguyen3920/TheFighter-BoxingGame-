@@ -11,6 +11,8 @@ TagManager:
   - PlayerAction
   - EnemyHealth
   - EnemyController
+  - EnemySpawn
+  - EnemyContainer
   layers:
   - Default
   - TransparentFX

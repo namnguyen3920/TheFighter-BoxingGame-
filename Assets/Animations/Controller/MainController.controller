@@ -552,15 +552,15 @@ AnimatorStateMachine:
   m_AnyStateTransitions: []
   m_EntryTransitions: []
   m_StateMachineTransitions:
-  - first: {fileID: -865989374146849581}
-    second:
-    - {fileID: -3374220059392567105}
-    - {fileID: -4915301157354161122}
   - first: {fileID: -1201772678281335948}
     second:
     - {fileID: 8874373982549982109}
     - {fileID: 6415991473195685635}
     - {fileID: -4731275461638509074}
+  - first: {fileID: -865989374146849581}
+    second:
+    - {fileID: -3374220059392567105}
+    - {fileID: -4915301157354161122}
   m_StateMachineBehaviours: []
   m_AnyStatePosition: {x: 50, y: 20, z: 0}
   m_EntryPosition: {x: 50, y: 120, z: 0}
@@ -599,11 +599,11 @@ AnimatorStateTransition:
   m_Mute: 0
   m_IsExit: 0
   serializedVersion: 3
-  m_TransitionDuration: 0.25
+  m_TransitionDuration: 0
   m_TransitionOffset: 0
   m_ExitTime: 0.8863636
-  m_HasExitTime: 1
-  m_HasFixedDuration: 1
+  m_HasExitTime: 0
+  m_HasFixedDuration: 0
   m_InterruptionSource: 0
   m_OrderedInterruption: 1
   m_CanTransitionToSelf: 1
